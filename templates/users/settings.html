@@ -1,0 +1,57 @@
+{% extends "layouts/base.html" %}
+{% block main %}
+<div class="container">
+	<div class="col-md-6 col-md-offset-3 white-background">
+		<br>
+		
+		<h1 class="txt-center">Settings</h1>
+
+		<form action="" method="POST">
+			{% csrf_token %}
+			<center>{{ form.non_field_errors }}</center>
+
+			<field>Username:
+				{{ form.username.errors }}
+
+				<div class="input-group margin-bottom-sm">
+					<span class="input-group-addon"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
+					{{ form.username }}
+				</div>
+			</field>
+
+			<br>
+
+			<field>Email:
+				{{ form.email.errors }}
+				
+				<div class="input-group margin-bottom-sm">
+					<span class="input-group-addon"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i></span>
+					{{ form.email }}
+				</div>
+			</field>
+
+			<br>
+
+			<input id="save" disabled="true" type="submit" value="Save Changes" class="btn btn-primary full-width" />
+		</form>
+
+		<hr>
+
+		<a href="/users/change_password/">Change Password</a>
+
+		<br>
+
+		{% if request.user.is_superuser %}
+		<a href="/admin/">Go To Admin</a>
+		
+		<br>
+		{% endif %}
+
+		<br>
+	</div>
+</div>
+
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/edit_profile.js' %}"></script>
+
+{% endblock %}

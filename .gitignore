@@ -1,0 +1,6 @@
+*.pyc
+local_settings.py
+db.sqlite3
+global_vars.js
+.DS_Store
+**/.DS_Store

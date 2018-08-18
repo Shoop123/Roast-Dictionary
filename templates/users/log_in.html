@@ -1,0 +1,51 @@
+{% extends "layouts/base.html" %}
+
+{% block main %}
+
+<div class="container">
+	<div class="col-md-6 col-md-offset-3 white-background">
+		<br>
+
+		<h1 class="txt-center">Log In</h1>
+
+		<br>
+		
+		<form action="" method="POST">
+			{% csrf_token %}
+			<center>{{ form.non_field_errors }}</center>
+
+			{{ form.username.errors }}
+			<div class="input-group margin-bottom-sm">
+	  			<span class="input-group-addon"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
+				{{ form.username }}
+			</div>
+
+			<br>
+			
+			{{ form.password.errors }}
+			<div class="input-group margin-bottom-sm">
+  				<span class="input-group-addon"><i class="fa fa-key fa-fw" aria-hidden="true"></i></span>
+				{{ form.password }}
+			</div>
+
+			<br>
+			<input type="submit" value="Log In" class="btn btn-primary full-width" />
+		</form>
+
+		<br>
+
+		<hr>
+
+		<a href="/users/sign_up">Create an Account</a>
+
+		<br>
+
+		<a href="/users/password/reset">Reset Password</a>
+		
+		<br>
+		<br>
+		<a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+		<br>
+	</div>
+</div>
+{% endblock %}

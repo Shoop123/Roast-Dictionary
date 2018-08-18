@@ -1,0 +1,20 @@
+{% extends "layouts/base.html" %}
+
+{% block main %}
+<div class="container">
+	<div class="col-md-8">
+	{% block content %}
+	{% endblock content %}
+	</div>
+
+	<div class="col-md-4">
+	<div class="jumbotron white-background low-padding txt-center">
+		<img src="/static/img/mockup-d50ce426_1024x1024.jpg" alt="" width="100%">
+		<a href="https://shop.roastdictionary.com" class="btn btn-success"> Count me in <i class="fa fa-shopping-cart"></i></a>
+	</div>
+	{% include 'side_bar/log_in.html' %}
+	{% include 'side_bar/roasts_of_the_day.html' %}
+	{% include 'side_bar/footer.html' %}
+	</div>
+</div>
+{% endblock %}

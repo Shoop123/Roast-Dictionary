@@ -1,0 +1,30 @@
+{% extends "layouts/base.html" %}
+
+{% block main %}
+
+<div class="container">
+	<div class="row">
+		<h2>{{ title }} Roast</h2>
+
+		<form method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<center>{{ form.non_field_errors }}</center>
+
+			{{ form.keys.errors }}
+			{{ form.keys }}
+			
+			<br>
+
+			<br>
+
+			{{ form.body.errors }}
+			{{ form.body }}
+
+			<br>
+			<br>
+
+			<input type="submit" value="{{ button_name }} Roast" class="form-control btn-primary" />
+		</form>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "layouts/base_with_side_bar.html" %}
+
+{% block meta %}
+<meta name="description" content="Roast Dictionary" />
+<meta property="og:title" content="Roast Dictionary" />
+<meta property="og:url" content="https://roastdictionary.com{{app_url}}" />
+<meta property="og:image" content="https://roastdictionary.com/static/img/roastdictionary_black.png" />
+<meta property="og:description" content="{{ roast }}" />
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron white-background">
+	<font size="4">
+		{{ roast }}
+	</font>
+
+	<p>
+		<font size="2">
+			{% if request.user.is_authenticated %}
+			<a class="up-roast" id="up-roast-{{id}}" data-toggle="tooltip" data-placement="top" title="Uproast">
+				<i class="fa fa-angle-up"></i> 
+			</a>
+			{% else %}
+			<a data-toggle="modal" data-target="#logInModal" data-toggle="tooltip" data-placement="top" title="Uproast">
+				<i class="fa fa-angle-up"></i> 
+			</a>
+			{% endif %}
+
+			&nbsp;
+
+			<span id="roast-{{id}}">{{ rating }}</span>
+			{% if request.user.is_authenticated %}
+			<a class="down-roast" id="down-roast-{{id}}" data-toggle="tooltip" data-placement="bottom" title="Downroast">
+				<i class="fa fa-angle-down"></i>
+			</a>
+			{% else %}
+			<a data-toggle="modal" data-target="#logInModal" data-toggle="tooltip" data-placement="bottom" title="Downroast">
+				<i class="fa fa-angle-down"></i>
+			</a>
+			{% endif %}
+		</font>
+
+		&nbsp;
+
+		{% if username == "Anonymous" %}
+		<font size="2" style="float: right">
+			Posted By: {{ username }}
+		</font>
+		{% else %}
+		<font size="2" style="float: right">
+			Posted By: <a href="/users/{{ username }}">{{ username }}</a>
+		</font>
+		{% endif %}
+
+		<br>
+
+		{% if keys %}
+		<font size="2">
+			Keys:
+		{% for key in keys %}
+		<a href="/keys/{{ key }}">{{ key }}</a>{% if not forloop.last %},{% endif %}
+		{% endfor %}
+
+		</font>
+		{% endif %}
+	</p>
+</div>
+{% endblock %}

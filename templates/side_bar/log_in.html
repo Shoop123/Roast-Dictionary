@@ -1,0 +1,78 @@
+
+	{% if not request.user.is_authenticated %}
+	<div class="jumbotron white-background low-padding">
+	<br>
+
+	<a class="btn btn-facebook btn-primary full-width btn-normal-link" href="{% url 'social:begin' 'facebook' %}"><i class="fa fa-facebook"></i>&nbsp; Login with Facebook</a>
+
+	<br>
+
+	<h3 class="txt-center">Or</h3>
+
+	<form method="POST" action="">
+		{% csrf_token %}
+		<center>{{ sign_up_form.non_field_errors }}</center>
+
+		{{ sign_up_form.username.errors }}
+
+		<div class="input-group margin-bottom-sm">
+			<span class="input-group-addon"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
+			{{ sign_up_form.username }}
+		</div>
+
+		<br>
+
+		{{ sign_up_form.email.errors }}
+
+		<div class="input-group margin-bottom-sm">
+			<span class="input-group-addon"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i></span>
+			{{ sign_up_form.email }}
+		</div>
+
+		<br>
+
+		{{ sign_up_form.password.errors }}
+
+		<div class="input-group margin-bottom-sm">
+			<span class="input-group-addon"><i class="fa fa-key fa-fw" aria-hidden="true"></i></span>
+			{{ sign_up_form.password }}
+		</div>
+
+		<br>
+
+		<input type="submit" value="Create Account" class="btn btn-primary full-width"/>
+	</form>
+
+	<h3 class="txt-center">Or</h3>
+
+	<form action="" method="post">
+		{% csrf_token %}
+		<center>{{ log_in_form.non_field_errors }}</center>
+
+		{{ log_in_form.username.errors }}
+
+		<div class="input-group margin-bottom-sm">
+			<span class="input-group-addon"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
+			{{ log_in_form.username }}
+		</div>
+
+		<br>
+
+		{{ log_in_form.password.errors }}
+
+		<div class="input-group margin-bottom-sm">
+			<span class="input-group-addon"><i class="fa fa-key fa-fw" aria-hidden="true"></i></span>
+			{{ log_in_form.password }}
+		</div>
+
+		<br>
+
+		<input type="submit" value="Log In" class="btn btn-primary full-width" />
+	</form>
+
+	<br>
+
+	<a href="/users/password/reset">Reset Password</a>
+	</div>
+		
+	{% endif %}

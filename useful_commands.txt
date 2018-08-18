@@ -1,0 +1,15 @@
+Start Local Email Server: python -m smtpd -n -c DebuggingServer localhost:1025
+
+Restart Gunicorn: sudo systemctl restart gunicorn
+Show Gunicorn Processes: ps auxf | grep gunicorn
+Start Gunicorn: sudo systemctl start gunicorn
+Enable Gunicorn: sudo systemctl enable gunicorn
+Show Gunicron Status: sudo systemctl status gunicorn
+
+Kill Pocess: kill -9 <PID>
+
+Restart nginx: sudo service nginx restart
+
+Run Celery Locally: celery -A roastdictionary worker -B
+Restart Celery on Server: sudo /etc/init.d/celeryd restart
+Restart Celery Beat on Server: sudo /etc/init.d/celerybeat restart

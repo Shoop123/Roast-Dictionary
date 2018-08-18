@@ -1,0 +1,192 @@
+body {
+	background-color: #f5f5f5 !important;
+	font-family: 'Ubuntu', sans-serif !important;
+}
+
+input.search
+{
+	height:5%;
+	font-size:20pt;
+}
+
+div.mainContent {
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+}
+
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 75%;
+}
+
+td, th {
+	border: 2px solid #dddddd;
+	padding: 8px;
+	text-align: center;
+}
+
+tr:nth-child(even) {
+	background-color: #dddddd;
+}
+
+.main-search {
+	text-align: center;
+}
+
+.full-width {
+	width:100%;
+}
+
+.white-background {
+	background-color: #fff !important;
+}
+
+.background-inverse {
+	background-color: #222 !important;
+	color: #fff !important;
+}
+
+.roast-item {
+	margin-left: -42px;
+	padding-right: 70px;
+}
+
+.roast-pic {
+	float: left;
+}
+
+.roast-pic img{
+	width:32px;
+	height: 32px;
+	border-radius: 100px;
+}
+
+.roast-content {
+	float: left;
+    width: 100%;
+    margin-top: -34px;
+    margin-left: 45px;
+    
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e9e6;
+    margin-bottom:10px;
+}
+
+.limit-width {
+	    width: 30px !important;
+}
+
+.txt-center {
+	text-align:center;
+}
+
+.full-width {
+	width:100%;
+}
+
+.js-example-data-ajax {
+	    max-height: 33px;
+	    width:100% !important;
+}
+
+.js-example-data-ajax option[value="0"] {
+	color:#a9a9a9;
+	margin-left: -8px;
+	margin-top: 1px;
+}
+
+
+.disabled {
+	pointer-events: none;
+	color: #666;
+}
+
+.active-roast {
+	font-weight:900;
+	font-size: 18px;
+}
+
+.up-roast:link, .up-roast:hover, .down-roast:link, .down-roast:hover {
+	text-decoration: none;
+}
+
+.navbar-inverse {
+	background-color: #1abc9c !important;
+	border-color: #16a085 !important;
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    color: #fff;
+    background-color: #1abc9c !important;
+}
+
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+    color: #fff;
+    background-color: #16a085 !important;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #fff !important;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #fff !important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #5897fb;
+    color: white;
+}
+
+.navbar-brand>img {
+    display: inline-block !important;
+}
+
+.logo-navbar {
+	margin-top:-7px;
+}
+
+.logo-sidebar {
+	margin: 0 auto;
+	display:block;
+}
+
+.low-padding {
+	padding-right:20px !important;
+	padding-left: 20px !important;
+}
+.jumbo-table {
+	
+	td {
+		text-align:left;
+	}
+	
+}
+
+.down-roast, .up-roast {
+	cursor: pointer;
+}
+
+.main-roast {
+	border: none !important;
+}
+
+a {
+	color: #16a085 !important;
+}
+
+.btn-success {
+	color:white !important;
+	background-color: #16a085 !important;
+}
+
+a.btn {
+	color: white !important;
+}
+
+.navbar-static-top {
+	margin-bottom: 0px !important;
+}

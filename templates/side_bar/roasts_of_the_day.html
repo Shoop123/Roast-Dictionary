@@ -1,0 +1,31 @@
+<div class="jumbotron white-background low-padding">
+	<h3 style="display: inline;">
+		<b><i>
+			Roasts of the Day
+		</i></b>
+	</h3>
+
+	<hr size="30">
+
+	{% for roast_of_the_day in roasts_of_the_day %}
+
+	<font size="4">
+		{{ roast_of_the_day.roast }}
+	</font>
+
+	{% if roast_of_the_day.username == "Anonymous" %}
+	<font size="2" style="float: right">
+		Posted By: {{ roast_of_the_day.username }}
+	</font>
+	{% else %}
+	<font size="2" style="float: right">
+		Posted By: <a href="/users/{{roast_of_the_day.user_id}}">{{ roast_of_the_day.username }}</a>
+	</font>
+	{% endif %}
+
+	{% if not forloop.last %}
+	<hr>
+	{% endif %}
+
+	{% endfor %}
+</div>

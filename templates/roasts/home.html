@@ -1,0 +1,258 @@
+{% extends "layouts/base_with_side_bar.html" %}
+
+{% block meta %}
+<meta property="og:updated_time" content="{{current_date}}" />
+<meta name="description" content="Roast Dictionary - The best roasts, all in one place." />
+<meta property="og:title" content="Roast Dictionary" />
+<meta property="og:url" content="https://roastdictionary.com{{app_url}}" />
+<meta property="og:image" content="https://roastdictionary.com/static/img/roastdictionary_black2.png" />
+<meta property="og:description" content="Roast Dictionary - The best roasts, all in one place." />
+{% endblock %}
+
+{% block content %}
+{% load staticfiles %}
+<script src="{% static 'js/manage_pages/manage_home.js' %}"></script>
+
+<div class="jumbotron white-background main" {% if request.user.is_authenticated %} data-info="logged_in" {% else %} data-info="not_logged_in" {% endif %}>
+
+	{% if keys.focus_roast %}
+	<span class="roast-info">
+		<div class="well main-roast" style="border-color: #1ABC9C">
+			<font size="4">
+				<strong>{{ keys.focus_roast.roast }}</strong>
+			</font>
+
+			<font size="2" style="float: right">
+				<a href="{{ keys.focus_roast.facebook }}" target="_blank">
+				  <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>
+				</a>
+				&nbsp;
+				<a href="{{ keys.focus_roast.twitter }}" target="_blank">
+				  <i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i>
+				</a>
+			</font>
+
+			<p>
+				<font size="2">
+					{% if request.user.is_authenticated %}
+						{% if keys.focus_roast.rated == 1 %}
+							<a  class="up-roast active-roast" id="up-roast-{{keys.focus_roast.id}}" data-toggle="tooltip" data-placement="top" title="Uproast">
+								<i class="fa fa-angle-up"></i> 
+							</a>
+						{% elif keys.focus_roast.rated == 0 %}
+							<a  class="up-roast" id="up-roast-{{keys.focus_roast.id}}" data-toggle="tooltip" data-placement="top" title="Uproast">
+								<i class="fa fa-angle-up"></i> 
+							</a>
+						{% else %}
+							<a  class="up-roast disabled" id="up-roast-{{keys.focus_roast.id}}" data-toggle="tooltip" data-placement="top" title="Uproast">
+								<i class="fa fa-angle-up"></i> 
+							</a>
+						{% endif %}
+					{% else %}
+						<a  data-toggle="modal" data-target="#logInModal" data-toggle="tooltip" data-placement="top" title="Uproast">
+							<i class="fa fa-angle-up"></i> 
+						</a>
+					{% endif %}
+
+					&nbsp;
+
+					<span id="roast-{{keys.focus_roast.id}}">{{ keys.focus_roast.total }}</span>
+					{% if request.user.is_authenticated %}
+					{% if keys.focus_roast.rated == 1 %}
+					<a  class="down-roast disabled" id="down-roast-{{keys.focus_roast.id}}" data-toggle="tooltip" data-placement="bottom" title="Downroast">
+						<i class="fa fa-angle-down"></i>
+					</a>
+					{% elif keys.focus_roast.rated == 0 %}
+					<a class="down-roast" id="down-roast-{{keys.focus_roast.id}}" data-toggle="tooltip" data-placement="bottom" title="Downroast">
+						<i class="fa fa-angle-down"></i>
+					</a>
+					{% else %}
+					<a class="down-roast active-roast" id="down-roast-{{keys.focus_roast.id}}" data-toggle="tooltip" data-placement="bottom" title="Downroast">
+						<i class="fa fa-angle-down"></i>
+					</a>
+					{% endif %}
+					{% else %}
+					<a data-toggle="modal" data-target="#logInModal" data-toggle="tooltip" data-placement="bottom" title="Downroast">
+						<i class="fa fa-angle-down"></i>
+					</a>
+					{% endif %}
+				</font>
+
+				&nbsp;
+				
+				{% if keys.focus_roast.user == "Anonymous" %}
+				<font size="2" style="float: right">
+					Posted By: {{ keys.focus_roast.user }}
+				</font>
+				{% else %}
+				<font size="2" style="float: right">
+					Posted By: <a href="/users/{{keys.focus_roast.user_id}}">{{ keys.focus_roast.user }}</a>
+				</font>
+				{% endif %}
+
+				<br>
+
+				{% if keys.focus_roast.other_keys %}
+				<font size="2">
+					Keys for this Roast:
+					{% for key in keys.focus_roast.other_keys %}
+					<a href="/keys/{{ key }}">{{ key }}</a>{% if not forloop.last %},{% endif %}
+					{% endfor %}
+				</font>
+				{% endif %}
+			</p>
+		</div>
+	</span>
+	{% endif %}
+
+	<div id="all-keys">
+		{% for key in keys.keys %}
+		<script>
+			window.saveHomeId({{ key.id }});
+		</script>
+
+		<div class="key">
+			<span class="key-name">
+				<a href="/keys/{{ key.name }}/">
+					<h3 style="display: inline;">
+						<b><i>
+							{{ key.name }}
+						</i></b>
+					</h3>
+				</a>
+			</span>
+
+			<div class="roasts">
+				{% for roast in key.roasts %}
+				<span class="roast-info">
+					<font size="4">
+						{{ roast.roast }}
+					</font>
+
+					<font size="2" style="float: right">
+						<a href="https://www.facebook.com/sharer/sharer.php?u=https://roastdictionary.com?focus-roast={{roast.id}}" target="_blank">
+						  <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>
+						</a>
+						&nbsp;
+						<a href="http://twitter.com/intent/tweet?text=Check+out+this+savage+roast&via=RoastDictionary&url=https://roastdictionary.com?focus-roast={{roast.id}}&hashtags=roastdictionary" target="_blank">
+						  <i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i>
+						</a>
+					</font>
+
+					<p>
+						<font size="2">
+							{% if request.user.is_authenticated %}
+								{% if roast.rated == 1 %}
+									<a  class="up-roast active-roast" id="up-roast-{{roast.id}}" data-toggle="tooltip" data-placement="top" title="Uproast">
+										<i class="fa fa-angle-up"></i> 
+									</a>
+								{% elif roast.rated == 0 %}
+									<a  class="up-roast" id="up-roast-{{roast.id}}" data-toggle="tooltip" data-placement="top" title="Uproast">
+										<i class="fa fa-angle-up"></i> 
+									</a>
+								{% else %}
+									<a  class="up-roast disabled" id="up-roast-{{roast.id}}" data-toggle="tooltip" data-placement="top" title="Uproast">
+										<i class="fa fa-angle-up"></i> 
+									</a>
+								{% endif %}
+							{% else %}
+								<a  data-toggle="modal" data-target="#logInModal" data-toggle="tooltip" data-placement="top" title="Uproast">
+									<i class="fa fa-angle-up"></i> 
+								</a>
+							{% endif %}
+
+							&nbsp;
+
+							<span id="roast-{{roast.id}}">{{ roast.total }}</span>
+							{% if request.user.is_authenticated %}
+							{% if roast.rated == 1 %}
+							<a  class="down-roast disabled" id="down-roast-{{roast.id}}" data-toggle="tooltip" data-placement="bottom" title="Downroast">
+								<i class="fa fa-angle-down"></i>
+							</a>
+							{% elif roast.rated == 0 %}
+							<a class="down-roast" id="down-roast-{{roast.id}}" data-toggle="tooltip" data-placement="bottom" title="Downroast">
+								<i class="fa fa-angle-down"></i>
+							</a>
+							{% else %}
+							<a class="down-roast active-roast" id="down-roast-{{roast.id}}" data-toggle="tooltip" data-placement="bottom" title="Downroast">
+								<i class="fa fa-angle-down"></i>
+							</a>
+							{% endif %}
+							{% else %}
+							<a data-toggle="modal" data-target="#logInModal" data-toggle="tooltip" data-placement="bottom" title="Downroast">
+								<i class="fa fa-angle-down"></i>
+							</a>
+							{% endif %}
+						</font>
+
+						&nbsp;
+
+						{% if roast.user == "Anonymous" %}
+						<font size="2" style="float: right">
+							Posted By: {{ roast.user }}
+						</font>
+						{% else %}
+						<font size="2" style="float: right">
+							Posted By: <a href="/users/{{roast.user_id}}">{{ roast.user }}</a>
+						</font>
+						{% endif %}
+
+						<br>
+
+						{% if roast.other_keys %}
+						<font size="2">
+							Other Keys for this Roast:
+							{% for other_key in roast.other_keys %}
+							<a href="/keys/{{ other_key }}">{{ other_key }}</a>{% if not forloop.last %},{% endif %}
+							{% endfor %}
+						</font>
+						{% endif %}
+					</p>
+				</span>
+				{% endfor %}									
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	
+	<input id="btnLoadMore" type="button" value="See More" onclick="loadMoreHome()" class="btn btn-lg btn-block btn-default" />
+
+	<!-- Modal -->
+	<div class="modal fade" id="logInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<h2 class="txt-center">Log in to rate a roast</h2>
+					
+					<br>
+					
+					<form action="" method="post">
+						{% csrf_token %}
+						
+						{{ log_in_form.username }}
+
+						<br>
+						{{ log_in_form.password }}
+
+						<br>
+						<input type="submit" value="Log In" class="btn btn-primary full-width" />
+					</form>
+
+					<br>
+
+					<hr>
+
+					<a href="/users/sign_up">Create an Account</a>
+
+					<br>
+
+					<a href="/users/password/reset">Reset Password</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

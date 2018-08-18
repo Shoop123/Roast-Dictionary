@@ -1,0 +1,151 @@
+{% extends "layouts/base_with_side_bar.html" %}
+
+{% block content %}
+{% load staticfiles %}
+<script src="{% static 'js/manage_pages/manage_profile.js' %}"></script>
+
+<div id="username" data-info="{{ username }}">
+</div>
+
+<div id="main" {% if request.user.is_authenticated %} data-info="logged_in" {% else %} data-info="not_logged_in" {% endif %}>
+</div>
+
+<div id="current-user-username" class="jumbotron white-background" {% if request.user.is_authenticated %} data-info="{{ request.user.username }}" {% else %} data-info="Anonymous" {% endif %}>
+	<h1 class="txt-center">{{ username }}</h1>
+
+	<div id="all-roasts" class="roasts">
+		{% if roasts %}
+		{% if request.user.is_authenticated and request.user.username == username %}
+		<h3>
+			<u>My Roasts</u>
+		</h3>
+		{% else %}
+		<h3>
+			<u>{{ username }}'s Roasts</u>
+		</h3>
+		{% endif %}
+
+		<br>
+
+		{% for roast in roasts %}
+		<span class="roast-info" id="{{ roast.id }}">
+			<font size="4">
+				{{ roast.roast }}
+			</font>
+
+			<font size="2" style="float: right">
+				<a href="https://www.facebook.com/sharer/sharer.php?u=https://roastdictionary.com?focus-roast={{roast.id}}" target="_blank">
+				  <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>
+				</a>
+				&nbsp;
+				<a href="http://twitter.com/intent/tweet?text=Check+out+this+savage+roast&via=RoastDictionary&url=https://roastdictionary.com?focus-roast={{roast.id}}&hashtags=roastdictionary" target="_blank">
+				  <i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i>
+				</a>
+			</font>
+
+			<p>
+				<font size="2">
+					{% if request.user.is_authenticated %}
+					{% if roast.rated == 1 %}
+					<a href="#" class="up-roast active-roast" id="up-roast-{{roast.id}}">
+						<i class="fa fa-angle-up"></i> 
+					</a>
+					{% elif roast.rated == 0 %}
+					<a href="#" class="up-roast" id="up-roast-{{roast.id}}">
+						<i class="fa fa-angle-up"></i> 
+					</a>
+					{% else %}
+					<a href="#" class="up-roast disabled" id="up-roast-{{roast.id}}">
+						<i class="fa fa-angle-up"></i> 
+					</a>
+					{% endif %}
+					{% else %}
+					<a href="#" data-toggle="modal" data-target="#logInModal">
+						<i class="fa fa-angle-up"></i> 
+					</a>
+					{% endif %}
+
+					&nbsp;
+
+					<span id="roast-{{roast.id}}">{{ roast.total }}</span>
+					{% if request.user.is_authenticated %}
+					{% if roast.rated == 1 %}
+					<a href="#" class="down-roast disabled" id="down-roast-{{roast.id}}">
+						<i class="fa fa-angle-down"></i>
+					</a>
+					{% elif roast.rated == 0 %}
+					<a href="#" class="down-roast" id="down-roast-{{roast.id}}">
+						<i class="fa fa-angle-down"></i>
+					</a>
+					{% else %}
+					<a href="#" class="down-roast active-roast" id="down-roast-{{roast.id}}">
+						<i class="fa fa-angle-down"></i>
+					</a>
+					{% endif %}
+					{% else %}
+					<a href="#" data-toggle="modal" data-target="#logInModal">
+						<i class="fa fa-angle-down"></i>
+					</a>
+					{% endif %}
+
+					{% if not request.user.is_authenticated %}
+					<font size="2" style="float: right">
+						Posted By: {{ roast.user }}
+					</font>
+					{% endif %}
+				</font>
+
+				<br>
+
+				{% if roast.keys %}
+				<font size="2">
+					Keys:
+					{% for key in roast.keys %}
+					<a href="/keys/{{ key }}">{{ key }}</a>{% if not forloop.last %},{% endif %}
+					{% endfor %}
+				</font>
+				{% endif %}
+
+				{% if request.user.is_authenticated and request.user.username == username %}
+				<br>
+				
+				<a href="/edit_roast/?roast_id={{ roast.id }}" type="button" class="btn btn-primary">
+					<i class="fa fa-pencil fa-lg"></i> Edit
+				</a>
+				<a class="btn btn-danger" onclick="deleteRoast({{ roast.id }})">
+  					<i class="fa fa-trash fa-lg"></i> Delete
+  				</a>
+
+				<div id="alert-{{ roast.id }}" class="alert alert-danger alert-dismissible hide" role="alert">
+					<button type="button" onclick="closeAlert('alert-' + {{ roast.id }})" class="close" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+					Error deleting roast
+				</div>
+				{% endif %}
+			</p>
+		</span>
+		{% endfor %}
+		{% else %}
+		{% if request.user.is_authenticated and request.user.username == username %}
+		<font size="4">
+			You haven't posted any roasts!
+
+			<br>
+
+			<a href="/add_roast/">Let's change that</a>
+		</font>
+		{% else %}
+		<font size="4">
+			{{ username }} doesn't have any roasts
+		</font>
+		{% endif %}
+		{% endif %}
+	</div>
+
+	{% if roasts and not end %}
+	<input id="btnLoadMore" type="button" value="Load More" onclick="loadMoreProfile()" class="btn btn-lg btn-block btn-default" />
+	{% endif %}
+</div>
+{% endblock %}
